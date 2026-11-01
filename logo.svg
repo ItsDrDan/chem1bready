@@ -1,48 +1,121 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Bridge to 1B logo: a smiling atom with a backpack walking across a bridge, carrying a 1B flag">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Bridge to 1B logo: a smiling atom with a backpack hiking across a suspension bridge, carrying a 1B flag">
 <defs>
-<radialGradient id="abg" cx="50%" cy="30%" r="75%"><stop offset="0" stop-color="#fff6ea"/><stop offset=".6" stop-color="#f3e8ff"/><stop offset="1" stop-color="#dde4ff"/></radialGradient>
-<linearGradient id="aarch" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6cc7a5"/><stop offset=".5" stop-color="#7d88ea"/><stop offset="1" stop-color="#ee8fb3"/></linearGradient>
-<linearGradient id="awater" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9dcef"/><stop offset="1" stop-color="#7cc2de"/></linearGradient>
-<radialGradient id="abody" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#fff4c9"/><stop offset=".7" stop-color="#ffd36b"/><stop offset="1" stop-color="#f6b84a"/></radialGradient>
-<linearGradient id="apack" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9aa3f2"/><stop offset="1" stop-color="#6d78de"/></linearGradient>
-<clipPath id="aclip"><circle cx="60" cy="60" r="58"/></clipPath>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9d4ff"/><stop offset=".45" stop-color="#f1e2ff"/><stop offset=".8" stop-color="#ffe3cf"/></linearGradient>
+<radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff9e8" stop-opacity=".95"/><stop offset=".55" stop-color="#fff1d6" stop-opacity=".55"/><stop offset="1" stop-color="#fff1d6" stop-opacity="0"/></radialGradient>
+<linearGradient id="hillBack" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cbc3f3"/><stop offset="1" stop-color="#e2dcfb"/></linearGradient>
+<linearGradient id="hillFront" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9dfc6"/><stop offset="1" stop-color="#cdeedf"/></linearGradient>
+<linearGradient id="water" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a8def0"/><stop offset="1" stop-color="#6aaed6"/></linearGradient>
+<linearGradient id="cable" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5dbb98"/><stop offset=".5" stop-color="#7a83e8"/><stop offset="1" stop-color="#e8849f"/></linearGradient>
+<linearGradient id="tower" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8d95ec"/><stop offset=".55" stop-color="#6f78d8"/><stop offset="1" stop-color="#5a62c4"/></linearGradient>
+<linearGradient id="deck" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7c86e3"/><stop offset="1" stop-color="#5059bd"/></linearGradient>
+<radialGradient id="body" cx="36%" cy="30%" r="78%"><stop offset="0" stop-color="#fff7d6"/><stop offset=".35" stop-color="#ffe08a"/><stop offset=".75" stop-color="#ffc54f"/><stop offset="1" stop-color="#f2a33a"/></radialGradient>
+<radialGradient id="limb" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#ffe7a3"/><stop offset="1" stop-color="#f4b046"/></radialGradient>
+<radialGradient id="iris" cx="45%" cy="35%" r="70%"><stop offset="0" stop-color="#7a5bc7"/><stop offset=".6" stop-color="#3d2d6e"/><stop offset="1" stop-color="#1f1733"/></radialGradient>
+<radialGradient id="cheek" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ff8fab" stop-opacity=".85"/><stop offset="1" stop-color="#ff8fab" stop-opacity="0"/></radialGradient>
+<linearGradient id="pack" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a6aef7"/><stop offset="1" stop-color="#5e68d2"/></linearGradient>
+<linearGradient id="flag" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff9dbc"/><stop offset=".55" stop-color="#ff7aa3"/><stop offset="1" stop-color="#ef5f8d"/></linearGradient>
+<linearGradient id="shoe" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff8fb0"/><stop offset="1" stop-color="#e2668e"/></linearGradient>
+<linearGradient id="ring" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9fa8ff"/><stop offset="1" stop-color="#6c63e0"/></linearGradient>
+<linearGradient id="rim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9ea7f5"/><stop offset=".5" stop-color="#f3a6c4"/><stop offset="1" stop-color="#7fd0b2"/></linearGradient>
+<radialGradient id="eglow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+<filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.2"/></filter>
+<filter id="drop" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#3b3f8f" flood-opacity=".22"/></filter>
+<clipPath id="disc"><circle cx="120" cy="120" r="112"/></clipPath>
 </defs>
-<circle cx="60" cy="60" r="58" fill="url(#abg)"/>
-<g clip-path="url(#aclip)">
-<path d="M15 26l1.8 4.2 4.2 1.8-4.2 1.8L15 38l-1.8-4.2L9 32l4.2-1.8Z" fill="#b9a6ff"/>
-<path d="M101 22l1.3 3 3 1.3-3 1.3-1.3 3-1.3-3-3-1.3 3-1.3Z" fill="#ffb3c7"/>
-<circle cx="24" cy="50" r="1.8" fill="#8fd6c2"/><circle cx="98" cy="46" r="1.6" fill="#ffcf63"/>
-<rect x="0" y="99" width="120" height="25" fill="url(#awater)"/>
-<path d="M8 108q5-2.5 10 0t10 0M48 112q5-2.5 10 0t10 0M86 108q5-2.5 10 0t10 0" fill="none" stroke="#e6f7fc" stroke-width="2" stroke-linecap="round"/>
-<path d="M-4 99 Q60 52 124 99" fill="none" stroke="url(#aarch)" stroke-width="6" stroke-linecap="round"/>
-<g stroke="#b7bdf0" stroke-width="2"><path d="M14 88v10M26 81v17M38 76v22M82 76v22M94 81v17M106 88v10"/></g>
-<rect x="-4" y="95" width="128" height="7" rx="3.5" fill="#6f79d6"/>
-<rect x="-4" y="95" width="128" height="2.4" rx="1.2" fill="#9aa2ef"/>
-<g transform="translate(16 74)"><rect x="-1" y="0" width="2" height="21" rx="1" fill="#8a7fa6"/><rect x="-10" y="-1" width="20" height="11" rx="3" fill="#e2f5ec" stroke="#5fae8e" stroke-width="1.8"/><text x="0" y="7.8" text-anchor="middle" font-family="ui-rounded,'Segoe UI',Arial,sans-serif" font-weight="800" font-size="8" fill="#2f7f5f">1A</text></g>
-<g transform="translate(58 60)">
-<path d="M-22 6c-4 1-7 9-5 15 2 5 8 6 12 4z" fill="url(#apack)" stroke="#5560c6" stroke-width="1.6"/>
-<path d="M-24 12h6" stroke="#5560c6" stroke-width="1.4" stroke-linecap="round"/>
-<ellipse cx="-7" cy="33" rx="6" ry="3.4" fill="#f0a54a"/><ellipse cx="9" cy="32" rx="6" ry="3.4" fill="#f0a54a"/>
-<path d="M-7 25v6M8 25v5" stroke="#e8a238" stroke-width="4" stroke-linecap="round"/>
-<ellipse rx="34" ry="11" fill="none" stroke="#7b86e6" stroke-width="2.6" transform="rotate(-12)"/>
-<ellipse rx="34" ry="11" fill="none" stroke="#e58fb0" stroke-width="2.6" transform="rotate(62)"/>
-<ellipse rx="34" ry="11" fill="none" stroke="#6cc1a2" stroke-width="2.6" transform="rotate(-62)"/>
-<circle r="22" fill="url(#abody)" stroke="#e39a2a" stroke-width="2"/>
-<path d="M-12-15q6-6 14-4" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".75"/>
-<ellipse cx="-7.5" cy="-1" rx="3.6" ry="4.6" fill="#2b2230"/><ellipse cx="7.5" cy="-1" rx="3.6" ry="4.6" fill="#2b2230"/>
-<circle cx="-6.2" cy="-2.8" r="1.5" fill="#fff"/><circle cx="8.8" cy="-2.8" r="1.5" fill="#fff"/><circle cx="-8.6" cy=".8" r=".7" fill="#fff"/><circle cx="6.4" cy=".8" r=".7" fill="#fff"/>
-<ellipse cx="-14" cy="6" rx="4" ry="2.5" fill="#ff9fb4" opacity=".8"/><ellipse cx="14" cy="6" rx="4" ry="2.5" fill="#ff9fb4" opacity=".8"/>
-<path d="M-5 6q5 6 10 0q-5 2-10 0z" fill="#c4505f" stroke="#7a3540" stroke-width="1.4" stroke-linejoin="round"/>
-<path d="M-22 4q0 4 4 6" stroke="#5560c6" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-<circle cx="33" cy="-7" r="3.6" fill="#7b86e6" stroke="#fff" stroke-width="1.2"/>
-<circle cx="-15" cy="-28" r="3.6" fill="#e58fb0" stroke="#fff" stroke-width="1.2"/>
-<circle cx="-16" cy="29" r="3.6" fill="#6cc1a2" stroke="#fff" stroke-width="1.2"/>
-<path d="M20 8q6 2 9-2" stroke="#e8a238" stroke-width="4" fill="none" stroke-linecap="round"/>
-<rect x="28" y="-34" width="2.4" height="42" rx="1.2" fill="#8a6f8f"/>
-<path d="M30.4-34h20l-5 7 5 7h-20z" fill="#ffd1df" stroke="#d7799a" stroke-width="1.8" stroke-linejoin="round"/>
-<text x="39" y="-23" text-anchor="middle" font-family="ui-rounded,'Segoe UI',Arial,sans-serif" font-weight="900" font-size="9.5" fill="#b04a6f">1B</text>
-<circle cx="29.2" cy="7" r="3.6" fill="#ffd36b" stroke="#e39a2a" stroke-width="1.4"/>
+
+<circle cx="120" cy="120" r="118" fill="url(#rim)"/>
+<circle cx="120" cy="120" r="113" fill="#fff"/>
+<g clip-path="url(#disc)">
+ <rect width="240" height="240" fill="url(#sky)"/>
+ <circle cx="124" cy="112" r="96" fill="url(#glow)"/>
+ <!-- clouds -->
+ <g fill="#fff" opacity=".85"><ellipse cx="44" cy="62" rx="22" ry="9"/><ellipse cx="58" cy="56" rx="14" ry="10"/><ellipse cx="34" cy="58" rx="10" ry="7"/>
+ <ellipse cx="190" cy="48" rx="20" ry="8"/><ellipse cx="202" cy="43" rx="12" ry="9"/><ellipse cx="180" cy="45" rx="9" ry="6"/></g>
+ <!-- hills -->
+ <path d="M0 158 Q30 128 64 146 T130 140 T196 136 T240 150 V240 H0Z" fill="url(#hillBack)"/>
+ <path d="M0 172 Q40 150 86 166 T170 160 T240 168 V240 H0Z" fill="url(#hillFront)"/>
+ <!-- water -->
+ <rect y="190" width="240" height="50" fill="url(#water)"/>
+ <g stroke="#e8f8fd" stroke-width="2.6" stroke-linecap="round" fill="none" opacity=".9"><path d="M22 206q7-3.5 14 0t14 0"/><path d="M98 216q7-3.5 14 0t14 0"/><path d="M170 206q7-3.5 14 0t14 0"/><path d="M60 226q6-3 12 0"/><path d="M150 228q6-3 12 0"/></g>
+ <!-- bridge towers -->
+ <g filter="url(#drop)">
+  <path d="M26 186V98q0-6 6-6h12q6 0 6 6v88z" fill="url(#tower)"/><path d="M33 186v-24q5-7 10 0v24z" fill="#4b53b0" opacity=".55"/><rect x="24" y="88" width="28" height="6" rx="3" fill="#9aa2f2"/>
+  <path d="M190 186V98q0-6 6-6h12q6 0 6 6v88z" fill="url(#tower)"/><path d="M197 186v-24q5-7 10 0v24z" fill="#4b53b0" opacity=".55"/><rect x="188" y="88" width="28" height="6" rx="3" fill="#9aa2f2"/>
+ </g>
+ <!-- cables and hangers -->
+ <g stroke="#b5bbf3" stroke-width="1.6"><path d="M58 104v74M70 115v63M82 124v54M94 131v47M106 135v43M118 137v41M130 136v42M142 133v45M154 127v51M166 119v59M178 108v70"/></g>
+ <path d="M-6 150 Q14 118 38 92 Q120 176 202 92 Q226 118 246 150" fill="none" stroke="url(#cable)" stroke-width="4.2" stroke-linecap="round"/>
+ <!-- deck -->
+ <path d="M-4 172h248" stroke="#a7aef3" stroke-width="2.4"/>
+ <g stroke="#a7aef3" stroke-width="2"><path d="M8 172v8M24 172v8M56 172v8M72 172v8M88 172v8M104 172v8M136 172v8M152 172v8M168 172v8M184 172v8M216 172v8M232 172v8"/></g>
+ <rect x="-4" y="179" width="248" height="13" rx="4" fill="url(#deck)"/>
+ <rect x="-4" y="179" width="248" height="3.5" rx="1.75" fill="#a3abf6"/>
+ <g stroke="#454db0" stroke-width="1" opacity=".5"><path d="M20 184v6M44 184v6M68 184v6M92 184v6M116 184v6M140 184v6M164 184v6M188 184v6M212 184v6"/></g>
+ <!-- 1A signpost -->
+ <g transform="translate(36 140)" filter="url(#drop)">
+  <rect x="-2" y="0" width="4" height="40" rx="2" fill="#9b7a64"/>
+  <path d="M-16 -2h30q3 0 3 3v12q0 3-3 3h-30l-8-9z" fill="#e3f6ec" stroke="#4fa583" stroke-width="2.4" stroke-linejoin="round"/>
+  <text x="-1" y="12.2" text-anchor="middle" font-family="ui-rounded,'SF Pro Rounded','Segoe UI',Arial,sans-serif" font-weight="900" font-size="13" fill="#2d7a5b">1A</text>
+ </g>
+ <!-- sparkles -->
+ <path d="M30 104l2.4 5.6 5.6 2.4-5.6 2.4L30 120l-2.4-5.6-5.6-2.4 5.6-2.4Z" fill="#b39dff"/>
+ <path d="M206 128l1.8 4.2 4.2 1.8-4.2 1.8-1.8 4.2-1.8-4.2-4.2-1.8 4.2-1.8Z" fill="#ffd36b"/>
+ <circle cx="214" cy="80" r="2.6" fill="#ff9fbd"/><circle cx="20" cy="138" r="2.2" fill="#7fd0b2"/>
+
+ <!-- ===== the atom hiker ===== -->
+ <ellipse cx="116" cy="182" rx="38" ry="5.5" fill="#3a3f94" opacity=".25"/>
+ <g transform="translate(114 118)">
+  <!-- back rings (behind body) -->
+  <ellipse rx="62" ry="17" fill="none" stroke="#f08db0" stroke-width="3.6" transform="rotate(58)"/>
+  <ellipse rx="62" ry="17" fill="none" stroke="#5fc39d" stroke-width="3.6" transform="rotate(-58)"/>
+  <g transform="translate(0 8) rotate(-10)"><ellipse rx="66" ry="18" fill="none" stroke="url(#ring)" stroke-width="4"/></g>
+  <!-- backpack -->
+  <g filter="url(#drop)">
+   <rect x="-60" y="-22" width="30" height="44" rx="11" fill="url(#pack)" stroke="#4a54c0" stroke-width="2.4"/>
+   <path d="M-60 -6q15 6 30 0" fill="none" stroke="#4a54c0" stroke-width="2.2"/>
+   <rect x="-55" y="4" width="20" height="13" rx="4" fill="#8f98f0" stroke="#4a54c0" stroke-width="1.8"/>
+   <rect x="-47.5" y="-9" width="5" height="6" rx="1.5" fill="#ffd36b" stroke="#c9902a" stroke-width="1.2"/>
+   <!-- test tube peeking out -->
+   <g transform="rotate(-14 -50 -22)"><rect x="-53" y="-40" width="8" height="22" rx="4" fill="#f4fbff" stroke="#6b75d6" stroke-width="1.8"/><path d="M-52.1 -30h6.2v8q0 3-3.1 3t-3.1-3z" fill="#7fd6b4"/><rect x="-55" y="-42" width="12" height="4" rx="2" fill="#6b75d6"/></g>
+  </g>
+  <!-- legs + sneakers (walking) -->
+  <path d="M-14 34q-6 14-14 22" stroke="url(#limb)" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <path d="M14 34q8 12 18 16" stroke="url(#limb)" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <g transform="translate(-32 59) rotate(10)"><path d="M-10 0q0-9 10-9t13 7q2 4-2 5h-19q-2 0-2-3z" fill="url(#shoe)" stroke="#b44a6f" stroke-width="1.8"/><rect x="-10.5" y="1.5" width="25" height="4" rx="2" fill="#fff" stroke="#b44a6f" stroke-width="1.4"/><circle cx="1" cy="-4.5" r="1.2" fill="#fff"/><circle cx="5" cy="-3.8" r="1.2" fill="#fff"/></g>
+  <g transform="translate(36 50) rotate(-22)"><path d="M-10 0q0-9 10-9t13 7q2 4-2 5h-19q-2 0-2-3z" fill="url(#shoe)" stroke="#b44a6f" stroke-width="1.8"/><rect x="-10.5" y="1.5" width="25" height="4" rx="2" fill="#fff" stroke="#b44a6f" stroke-width="1.4"/><circle cx="1" cy="-4.5" r="1.2" fill="#fff"/><circle cx="5" cy="-3.8" r="1.2" fill="#fff"/></g>
+  <!-- body (nucleus) -->
+  <circle r="40" fill="url(#body)" stroke="#e0922a" stroke-width="2.6"/>
+  <path d="M-30 18q16 22 46 14" fill="none" stroke="#e8962f" stroke-width="5" opacity=".35" stroke-linecap="round"/>
+  <path d="M-26 -22q10-14 28-14" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".7"/>
+  <circle cx="-30" cy="-8" r="3" fill="#fff" opacity=".7"/>
+  <!-- backpack strap across shoulder -->
+  <path d="M-38 -12q10 -4 14 10q3 12-6 26" fill="none" stroke="#5e68d2" stroke-width="5.5" stroke-linecap="round"/>
+  <!-- face -->
+  <path d="M-23 -22q7-5 13-1M10 -23q6-4 13 1" stroke="#7a4a2a" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+  <ellipse cx="-14" cy="-6" rx="9" ry="11" fill="#fff"/><ellipse cx="14" cy="-6" rx="9" ry="11" fill="#fff"/>
+  <ellipse cx="-12.5" cy="-4.5" rx="6.6" ry="8.6" fill="url(#iris)"/><ellipse cx="15.5" cy="-4.5" rx="6.6" ry="8.6" fill="url(#iris)"/>
+  <circle cx="-10" cy="-8.5" r="2.8" fill="#fff"/><circle cx="18" cy="-8.5" r="2.8" fill="#fff"/>
+  <circle cx="-14.5" cy="-1" r="1.3" fill="#fff" opacity=".9"/><circle cx="13.5" cy="-1" r="1.3" fill="#fff" opacity=".9"/>
+  <ellipse cx="-14" cy="-6" rx="9" ry="11" fill="none" stroke="#3a2a4a" stroke-width="1.6"/><ellipse cx="14" cy="-6" rx="9" ry="11" fill="none" stroke="#3a2a4a" stroke-width="1.6"/>
+  <ellipse cx="-27" cy="9" rx="8" ry="5" fill="url(#cheek)"/><ellipse cx="27" cy="9" rx="8" ry="5" fill="url(#cheek)"/>
+  <path d="M-9 9q9 3 18 0q-1 12-9 12t-9-12z" fill="#8f2f45" stroke="#6a2333" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M-5 17q5-5 10 0q-2 3.6-5 3.6t-5-3.6z" fill="#ff8aa6"/>
+  <path d="M-7.5 9.8q7.5 2 15 0v2.6q-7.5 1.8-15 0z" fill="#fff"/>
+  <!-- front ring arc (passes across the belly, below the smile) -->
+  <g transform="translate(0 8) rotate(-10)"><path d="M-66 0A66 18 0 0 0 66 0" fill="none" stroke="url(#ring)" stroke-width="4" stroke-linecap="round"/></g>
+  <!-- electrons -->
+  <g><circle cx="-61" cy="20" r="9" fill="url(#eglow)"/><circle cx="-61" cy="20" r="5.2" fill="#7b83ee" stroke="#fff" stroke-width="1.8"/></g>
+  <g><circle cx="-33" cy="-52" r="9" fill="url(#eglow)"/><circle cx="-33" cy="-52" r="5.2" fill="#f08db0" stroke="#fff" stroke-width="1.8"/></g>
+  <g><circle cx="-31" cy="54" r="0" fill="none"/></g>
+  <g><circle cx="34" cy="-52" r="9" fill="url(#eglow)"/><circle cx="34" cy="-52" r="5.2" fill="#5fc39d" stroke="#fff" stroke-width="1.8"/></g>
+  <!-- arm + flag -->
+  <path d="M36 4q12 2 16-10" stroke="url(#limb)" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <rect x="50" y="-78" width="4.2" height="92" rx="2.1" fill="#8a6a86"/>
+  <circle cx="52.1" cy="-80" r="4.4" fill="#ffd36b" stroke="#d9982e" stroke-width="1.6"/>
+  <path d="M54 -74q11-5 21 0t21 0v30q-10 5-21 0t-21 0z" fill="url(#flag)" stroke="#c94a78" stroke-width="2.2" stroke-linejoin="round"/>
+  <path d="M75 -74q-3 15 0 30" fill="none" stroke="#fff" stroke-width="1.6" opacity=".35"/>
+  <text x="75" y="-52" text-anchor="middle" font-family="ui-rounded,'SF Pro Rounded','Segoe UI',Arial,sans-serif" font-weight="900" font-size="17" fill="#fff" stroke="#c94a78" stroke-width="1" paint-order="stroke">1B</text>
+  <circle cx="51" cy="-7" r="6" fill="url(#limb)" stroke="#e0922a" stroke-width="1.8"/>
+ </g>
 </g>
-</g>
-<circle cx="60" cy="60" r="57" fill="none" stroke="#7b86e6" stroke-width="2.5" opacity=".35"/>
 </svg>
