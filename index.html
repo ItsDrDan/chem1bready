@@ -926,7 +926,7 @@ main.play.card{border-top:6px solid var(--acc,#4b57d1);padding-top:16px;backgrou
 .dens-chips b{font-weight:800;color:#3d4a66;margin-right:2px}
 .dens-chips span{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid #d9e1f5;border-radius:999px;padding:4px 10px;font-weight:700;white-space:nowrap}
 .dens-chips i{width:12px;height:12px;border-radius:3px;border:1.5px solid;display:inline-block}
-</style><script src="https://itsdrdan.github.io/games/track.js" defer></script>
+</style><script src="https://itsdrdan.github.io/games/track.js" defer></script><script src="https://itsdrdan.github.io/questionbank/qb.js"></script>
 </head>
 <body>
 <div id="celebrate" aria-hidden="true"></div>
@@ -1861,6 +1861,11 @@ else if(['half','acid','base'].includes(kind)||(kind==='activity'&&raw.yes)){for
 return {redoxLabelValues:Object.fromEntries((stages.find(s=>s.title==='Determine oxidation numbers')||stages[0]).fields.filter(f=>!f.options).map(f=>[f.id,f.answer])),redoxLabelRows:labelRows,redoxLabelFields:labelFields,route:stages.map(s=>s.title),topic:'redox',redoxSubtype:kind,source:"Dr. Dan's REDOX game · OpenStax 4.2 & 17.1",title:names[kind]+(kind==='roles'?' · '+raw.type:''),story,equation,steps:stages,redoxFinal:raw.final||null};}
 return {banks,make,names,conservation,identificationStates,atoms,charge};
 })();
+// Shared question bank: REDOX Refresh uses the REDOX game's full, current lists from itsdrdan.github.io/questionbank.
+// If the bank can't be reached (offline, downloaded copy), the built-in lists above are used instead.
+(function(){if(!window.QB)return;const KIND={'redox.oxidation-numbers':'ox','redox.identify':'roles','redox.activity-series':'activity','redox.half-reactions':'half','redox.acidic':'acid','redox.basic':'base'};
+QB.get({banks:['redox']}).then(items=>{const next={};for(const it of items||[]){const k=KIND[it.skill];if(!k||!it.data)continue;(next[k]=next[k]||[]).push(it.type==='oxidation-chart'?{...it.data,chart:true}:it.data);}
+for(const k of Object.keys(REDOX_REFRESH.banks)){if(next[k]&&next[k].length>=REDOX_REFRESH.banks[k].length){REDOX_REFRESH.banks[k]=next[k];delete bags['redox-bank-'+k];}}}).catch(()=>{});})();
 function redox(){const kind=drawBag('redox-types',Object.keys(REDOX_REFRESH.banks));return REDOX_REFRESH.make(kind,drawBag('redox-bank-'+kind,REDOX_REFRESH.banks[kind]));}
 const REACTION_BANK=(()=>{const gcd=(a,b)=>b?gcd(b,a%b):a;function atoms(s){let i=0;function parse(){let o={};while(i<s.length&&s[i]!==')'){if(s[i]==='('){i++;let inner=parse();if(s[i++]!==')')throw Error('Unclosed formula');let n=number();for(let[k,v]of Object.entries(inner))o[k]=(o[k]||0)+v*n}else{let m=s.slice(i).match(/^[A-Z][a-z]?/);if(!m)throw Error('Check element symbols and parentheses');i+=m[0].length;o[m[0]]=(o[m[0]]||0)+number()}}return o}function number(){let m=s.slice(i).match(/^\d+/);if(m){i+=m[0].length;return +m[0]}return 1}let a=parse();if(i!==s.length)throw Error('Check formula');return a}
 function solve(r,p){let f=r.concat(p),els=[...new Set(f.flatMap(x=>Object.keys(atoms(x))))],n=f.length,rows=els.map(e=>f.map((v,j)=>(j<r.length?1:-1)*(atoms(v)[e]||0)));let best=null;function attempt(last){let a=rows.map(row=>row.slice(0,-1).concat([-row[n-1]*last]));let rank=0;for(let col=0;col<n-1;col++){let pivot=a.findIndex((row,j)=>j>=rank&&Math.abs(row[col])>1e-8);if(pivot<0)continue;[a[rank],a[pivot]]=[a[pivot],a[rank]];let val=a[rank][col];for(let j=col;j<n;j++)a[rank][j]/=val;for(let k=0;k<a.length;k++)if(k!==rank){let v=a[k][col];for(let j=col;j<n;j++)a[k][j]-=v*a[rank][j]}rank++}if(rank<n-1)return null;let x=Array(n).fill(0);x[n-1]=last;for(let j=rank-1;j>=0;j--){let col=a[j].findIndex((v,k)=>k<n-1&&Math.abs(v)>1e-8);if(col<0){if(Math.abs(a[j][n-1])>1e-8)return null;continue}x[col]=a[j][n-1]-a[j].slice(col+1,n-1).reduce((t,v,k)=>t+v*x[col+1+k],0)}return x.every(v=>v>0&&Math.abs(v-Math.round(v))<1e-7)?x.map(Math.round):null}for(let k=1;k<=48;k++){best=attempt(k);if(best)break}if(!best)throw Error('Cannot balance '+f.join(','));let g=best.reduce(gcd);return best.map(x=>x/g)}
