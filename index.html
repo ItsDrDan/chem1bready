@@ -1215,7 +1215,7 @@ const LAB_INFO={
  mo:['🎚️','MO filling, bond order, magnetism'],
  physical:['🔥','Gases, heat, forces, solutions'],
  kineq:['🚀','Rates, K-ready concentrations, heat & algebra']};
-const QUEST_GROUPS=[['🚀','1B Launch',['kineq','physical','foundations']],['🧪','Moles & Solutions',['limiting','titration','ions']],['🔁','Reactions',['reactions','aqueous','redox']],['⚛️','Structure & Bonding',['lewis','geometry','mo']]];
+const QUEST_GROUPS=[['🚀','1B Launch',['kineq','ions','physical']],['🧪','Moles & Solutions',['foundations','limiting','titration']],['🔁','Reactions',['reactions','aqueous','redox']],['⚛️','Structure & Bonding',['lewis','geometry','mo']]];
 let qGroup=0,pickSeveral=false,mixBag=[],mixLast=null;
 let myMix=[];try{myMix=JSON.parse(localStorage.getItem('itsdrdan-1b-mix')||'[]').filter(id=>TRAIL_IDS().includes(id));}catch{}
 function TRAIL_IDS(){return ['foundations','limiting','titration','ions','reactions','aqueous','redox','lewis','geometry','mo','physical','kineq'];}
@@ -1224,7 +1224,7 @@ function chooseCustom(){const pool=myMix.length?myMix:TRAIL_IDS();if(!mixBag.len
 const TRAIL=['foundations','limiting','titration','ions','reactions','aqueous','redox','lewis','geometry','mo','physical','kineq'];
 /* 12 readiness questions, weighted toward what CHEM 1B builds on (acid–base and solution stoichiometry, ions, REDOX, energy) */
 /* aligned with the CHEM 1B outline: kinetics and equilibrium come first, then acid–base and solubility equilibria, thermodynamics and electrochemistry */
-const READINESS_PLAN=['kineq','kineq','kineq','limiting','ions','ions','titration','aqueous','physical','reactions','foundations','redox'];
+const READINESS_PLAN=['kineq','kineq','kineq','ions','ions','ions','limiting','titration','aqueous','physical','reactions','redox'];
 const RANK_ICONS=['🌉','🧭','🧪','⚛️','🚀'];
 let watching=false,watchShown=false,quietScroll=true,uiView='learn',learnPhase='watch';
 const labName=id=>MODES.find(m=>m[0]===id)[1];
@@ -1906,7 +1906,7 @@ function modeButtons(){renderPickers();}
 function save(){try{localStorage.setItem('itsdrdan-readiness-v1',JSON.stringify(progress))}catch{}}
 function stats(){renderQuest();$('correct').textContent=Object.values(progress).reduce((s,v)=>s+(v.wins||0),0);$('assisted').textContent=Object.values(progress).reduce((s,v)=>s+(v.assisted||0),0);$('streak').textContent=streak;$('mastery').innerHTML=topicIds.map(id=>{const p=progress[id]||{},name=MODES.find(m=>m[0]===id)[1];return `<div class="master-row"><label><span>${name}</span><span>${p.wins||0} wins</span></label><progress max="5" value="${Math.min(5,p.wins||0)}" aria-label="${name}: ${p.wins||0} independent completed questions"></progress></div>`}).join('');save();}
 let mixedTopicBag=[],lastMixedTopic=null,lastReadinessStart=null,lastProblemByTopic={};
-function chooseTopic(){if(!mixedTopicBag.length){const weights={titration:5,limiting:4,ions:5,aqueous:4,lewis:3,geometry:3,mo:3,foundations:2,physical:2,redox:2,reactions:3,kineq:5};mixedTopicBag=shuffle(topicIds.flatMap(id=>Array(Math.max(1,weights[id]-Math.min(2,progress[id]?.wins||0))).fill(id)));}if(mixedTopicBag.at(-1)===lastMixedTopic){const other=mixedTopicBag.findIndex(id=>id!==lastMixedTopic);if(other>=0)[mixedTopicBag[other],mixedTopicBag[mixedTopicBag.length-1]]=[mixedTopicBag.at(-1),mixedTopicBag[other]];}let id=mixedTopicBag.pop();if(id===lastMixedTopic){mixedTopicBag.unshift(id);id=pick(topicIds.filter(t=>t!==lastMixedTopic));}lastMixedTopic=id;return id;}
+function chooseTopic(){if(!mixedTopicBag.length){const weights={titration:5,limiting:4,ions:6,aqueous:4,lewis:3,geometry:3,mo:3,foundations:2,physical:2,redox:2,reactions:3,kineq:5};mixedTopicBag=shuffle(topicIds.flatMap(id=>Array(Math.max(1,weights[id]-Math.min(2,progress[id]?.wins||0))).fill(id)));}if(mixedTopicBag.at(-1)===lastMixedTopic){const other=mixedTopicBag.findIndex(id=>id!==lastMixedTopic);if(other>=0)[mixedTopicBag[other],mixedTopicBag[mixedTopicBag.length-1]]=[mixedTopicBag.at(-1),mixedTopicBag[other]];}let id=mixedTopicBag.pop();if(id===lastMixedTopic){mixedTopicBag.unshift(id);id=pick(topicIds.filter(t=>t!==lastMixedTopic));}lastMixedTopic=id;return id;}
 function readinessTopics(){const pool=READINESS_PLAN;let topics,tries=0;do{topics=shuffle(pool);tries++;}while(tries<200&&(topics[0]===lastReadinessStart||topics.some((t,i)=>i>0&&t===topics[i-1])));lastReadinessStart=topics[0];return topics;}
 function freshProblem(id){let candidate,key;for(let tries=0;tries<20;tries++){candidate=generators[id]();key=candidate.title+'|'+candidate.story+'|'+(candidate.equation||'');if(key!==lastProblemByTopic[id])break;}lastProblemByTopic[id]=key;return candidate;}
 
