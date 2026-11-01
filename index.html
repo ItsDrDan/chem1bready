@@ -829,6 +829,23 @@ main.play.card{border-top:6px solid var(--acc,#4b57d1);padding-top:16px;backgrou
 .qg.on{background:#4b57d1;border-color:#4b57d1;color:#fff;box-shadow:0 3px 0 #3c47b8}.qg.on small{background:#ffffff33;color:#fff}
 .qtiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:18px}
 @media(max-width:680px){#featured{grid-template-columns:1fr;gap:8px}.qgroups{display:grid;grid-template-columns:1fr 1fr;gap:6px}.qg{justify-content:center;padding:7px 8px;font-size:.92rem;min-height:44px}.qtiles{grid-template-columns:1fr;gap:8px}.qtiles .pick.tile{max-width:none}}
+/* v36: My Mix */
+.qg.pick-several{border-style:dashed;margin-left:auto}.qg.pick-several.on{background:#3a9a71;border-color:#3a9a71;border-style:solid;box-shadow:0 3px 0 #2c7a58}
+.mix-hint{margin:-4px 0 10px;font-size:.92rem;color:#2c7a58;font-weight:700}
+.pick.tile.choosing{position:relative}
+.selmark{position:absolute;top:8px;right:10px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;border:2px dashed #aab2c8;color:#7d8aa6;font-weight:900;font-size:1rem;background:#fff}
+.pick.tile.sel{box-shadow:0 0 0 3px #3a9a71,0 8px 18px #26343c1a;border-color:#fff}
+.pick.tile.sel .selmark{border:0;background:#3a9a71;color:#fff}
+.mixbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:-4px 0 18px;padding:12px 14px;border:2px solid #b8e0cc;border-radius:18px;background:linear-gradient(135deg,#f0faf5,#fff)}
+.mixbar.active{box-shadow:0 0 0 3px #3a9a71}
+.mix-chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.mix-chips b{font-family:Fredoka,Nunito,sans-serif;font-weight:600;margin-right:4px;color:#22303f}
+.mix-chip{background:#fff;border:1.5px solid #cfe9db;border-radius:999px;padding:3px 10px;font-size:.85rem;font-weight:800;color:#2c5b47}
+.mix-empty{color:#7d8aa6;font-size:.88rem}
+.mix-btns{display:flex;gap:8px}
+.mix-go{border:0;border-radius:14px;padding:10px 18px;min-height:48px;background:linear-gradient(180deg,#4fbf8d,#36a073);color:#fff;font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:1.02rem;box-shadow:0 3px 0 #2c7a58;cursor:pointer}
+.mix-go:disabled{opacity:.5;cursor:default}
+.mix-clear{border:1.5px solid #e6e0d2;background:#fff;border-radius:12px;padding:8px 12px;font-weight:800;cursor:pointer;color:#3a3a46}
+@media(max-width:680px){.qg.pick-several{grid-column:1/-1;margin-left:0;justify-content:center}.mixbar{flex-direction:column;align-items:stretch}.mix-btns .mix-go{flex:1}}
 
 .b1-mood [data-m]{display:none}
 .b1-mood[data-mood=idle] [data-m~=idle],.b1-mood[data-mood=happy] [data-m~=happy],.b1-mood[data-mood=star] [data-m~=star],.b1-mood[data-mood=wrong] [data-m~=wrong],.b1-mood[data-mood=curious] [data-m~=curious],.b1-mood[data-mood=excited] [data-m~=excited],.b1-mood[data-mood=peek] [data-m~=peek]{display:inline}
@@ -1199,7 +1216,11 @@ const LAB_INFO={
  physical:['🔥','Gases, heat, forces, solutions'],
  kineq:['🚀','Rates, K-ready concentrations, heat & algebra']};
 const QUEST_GROUPS=[['🚀','1B Launch',['kineq','physical','foundations']],['🧪','Moles & Solutions',['limiting','titration','ions']],['🔁','Reactions',['reactions','aqueous','redox']],['⚛️','Structure & Bonding',['lewis','geometry','mo']]];
-let qGroup=0;
+let qGroup=0,pickSeveral=false,mixBag=[],mixLast=null;
+let myMix=[];try{myMix=JSON.parse(localStorage.getItem('itsdrdan-1b-mix')||'[]').filter(id=>TRAIL_IDS().includes(id));}catch{}
+function TRAIL_IDS(){return ['foundations','limiting','titration','ions','reactions','aqueous','redox','lewis','geometry','mo','physical','kineq'];}
+function saveMix(){try{localStorage.setItem('itsdrdan-1b-mix',JSON.stringify(myMix));}catch{}}
+function chooseCustom(){const pool=myMix.length?myMix:TRAIL_IDS();if(!mixBag.length)mixBag=shuffle(pool);if(pool.length>1&&mixBag.at(-1)===mixLast)mixBag.unshift(mixBag.pop());const id=mixBag.pop();mixLast=id;return id;}
 const TRAIL=['foundations','limiting','titration','ions','reactions','aqueous','redox','lewis','geometry','mo','physical','kineq'];
 /* 12 readiness questions, weighted toward what CHEM 1B builds on (acid–base and solution stoichiometry, ions, REDOX, energy) */
 /* aligned with the CHEM 1B outline: kinetics and equilibrium come first, then acid–base and solubility equilibria, thermodynamics and electrochemistry */
@@ -1210,11 +1231,12 @@ const labName=id=>MODES.find(m=>m[0]===id)[1];
 
 function renderPickers(){
  const tile=(id,i,data,label)=>{const p=progress[id]||{},wins=Math.min(5,p.wins||0),active=data==='level'?(uiView==='learn'&&mode===id):(uiView==='practice'&&mode===id),c=LAB_COLORS[id];
-  return '<button type="button" class="pick tile'+(active?' active':'')+(wins>=5?' done':'')+'" data-'+data+'="'+id+'" aria-pressed="'+active+'" style="--mb:'+c[0]+';--ma:'+c[1]+'">'
-  +'<span class="mode-icon">'+tileArt(id)+'</span><span class="tile-txt"><span class="num">'+(wins>=5?'✓ ':'')+label+'</span><b class="mode-name">'+esc(id==='mixed'?'Mixed Practice':labName(id))+'</b><small>'+esc(id==='mixed'?'A bit of everything':LAB_INFO[id][1])+'</small></span>'
+  const sel=data==='quest'&&pickSeveral&&myMix.includes(id);
+  return '<button type="button" class="pick tile'+(active&&!pickSeveral?' active':'')+(wins>=5?' done':'')+(sel?' sel':'')+(data==='quest'&&pickSeveral?' choosing':'')+'" data-'+data+'="'+id+'" aria-pressed="'+active+'" style="--mb:'+c[0]+';--ma:'+c[1]+'">'
+  +(data==='quest'&&pickSeveral?'<span class="selmark" aria-hidden="true">'+(sel?'✓':'+')+'</span>':'')+'<span class="mode-icon">'+tileArt(id)+'</span><span class="tile-txt"><span class="num">'+(wins>=5?'✓ ':'')+label+'</span><b class="mode-name">'+esc(id==='mixed'?'Mixed Practice':labName(id))+'</b><small>'+esc(id==='mixed'?'A bit of everything':LAB_INFO[id][1])+'</small></span>'
   +(id==='mixed'?'':'<span class="foot"><span class="meter"><span style="width:'+(wins/5*100)+'%"></span></span><small>'+wins+'/5</small></span>')+'</button>';};
  $('trail').innerHTML=TRAIL.map((id,i)=>tile(id,i,'level','Stop '+(i+1))).join('');
- $('modeGrid').innerHTML='<div class="qgroups" role="tablist" aria-label="Topic groups">'+QUEST_GROUPS.map(([ico,name,ids],gi)=>'<button type="button" role="tab" class="qg'+(gi===qGroup?' on':'')+'" data-qgroup="'+gi+'" aria-selected="'+(gi===qGroup)+'"><span aria-hidden="true">'+ico+'</span>'+esc(name)+'<small>'+ids.length+'</small></button>').join('')+'</div><div class="qtiles">'+QUEST_GROUPS[qGroup][2].map(id=>tile(id,0,'quest','Quest')).join('')+'</div>';
+ $('modeGrid').innerHTML='<div class="qgroups" role="tablist" aria-label="Topic groups">'+QUEST_GROUPS.map(([ico,name,ids],gi)=>'<button type="button" role="tab" class="qg'+(gi===qGroup?' on':'')+'" data-qgroup="'+gi+'" aria-selected="'+(gi===qGroup)+'"><span aria-hidden="true">'+ico+'</span>'+esc(name)+'<small>'+ids.length+'</small></button>').join('')+'<button type="button" class="qg pick-several'+(pickSeveral?' on':'')+'" data-pickseveral aria-pressed="'+pickSeveral+'">'+(pickSeveral?'✓ Done choosing':'☑️ Choose several')+'</button></div>'+(pickSeveral?'<p class="mix-hint">Tap topics in any tab to add them to <b>My Mix</b>.</p>':'')+'<div class="qtiles">'+QUEST_GROUPS[qGroup][2].map(id=>tile(id,0,'quest','Quest')).join('')+'</div>'+((pickSeveral||myMix.length)?'<div class="mixbar'+(uiView==='practice'&&mode==='custom'?' active':'')+'"><div class="mix-chips"><b>🎛️ My Mix</b>'+(myMix.length?myMix.map(id=>'<span class="mix-chip">'+LAB_INFO[id][0]+' '+esc(labName(id))+'</span>').join(''):'<span class="mix-empty">No topics yet</span>')+'</div><div class="mix-btns">'+(myMix.length?'<button type="button" class="mix-clear" data-mixclear>Clear</button>':'')+'<button type="button" class="mix-go" data-mixgo'+(myMix.length?'':' disabled')+'>Practice my mix'+(myMix.length?' ('+myMix.length+')':'')+' →</button></div></div>':'');
  const dActive=uiView==='practice'&&mode==='diagnostic';
  const mActive=uiView==='practice'&&mode==='mixed';
  $('featured').innerHTML='<button type="button" class="feature-card'+(dActive?' active':'')+'" data-quest="diagnostic"><span class="fc-ico" aria-hidden="true">'+tileArt('diagnostic')+'</span><span><b>Readiness Check</b><small>12 questions on what CHEM 1B uses first, then your review plan.'+(quest.checks?' Done '+quest.checks+'×.':'')+'</small></span></button><button type="button" class="feature-card mixed'+(mActive?' active':'')+'" data-quest="mixed"><span class="fc-ico" aria-hidden="true">'+tileArt('mixed')+'</span><span><b>Mixed Practice</b><small>A bit of everything, more of what you need.</small></span></button>';
@@ -1247,8 +1269,8 @@ function afterRender(){if(!q)return;
  $('trailSteps').hidden=!learn;
  if(learn){const k=watching?0:1;$('trailSteps').innerHTML=[['watch','Watch','See an example solved'],['try','My turn','Solve one step by step']].map(([id,t,s],i)=>'<button type="button" data-stage="'+id+'" class="'+(i===k?'on':i<k?'done':'')+'" aria-current="'+(i===k?'step':'false')+'"><span>'+(i<k?'✓':i+1)+'</span><span style="all:unset"><b>'+t+'</b>'+s+'</span></button>').join('');}
  const stop=TRAIL.indexOf(q.topic)+1;
- $('playHeadTitle').innerHTML=(learn?'<small>Learn Trail · Stop '+stop+'</small>'+esc(labName(q.topic)):mode==='diagnostic'?'<small>Practice Quest</small>Readiness Check':mode==='mixed'?'<small>Practice Quest · '+esc(labName(q.topic))+'</small>Mixed Practice':'<small>Practice Quest</small>'+esc(labName(mode)));
- const acc=LAB_COLORS[mode==='diagnostic'||mode==='mixed'?mode:q.topic]||LAB_COLORS.mixed;$('practice').style.setProperty('--acc',acc[1]);$('practice').style.setProperty('--accbg',acc[0]);
+ $('playHeadTitle').innerHTML=(learn?'<small>Learn Trail · Stop '+stop+'</small>'+esc(labName(q.topic)):mode==='diagnostic'?'<small>Practice Quest</small>Readiness Check':mode==='mixed'?'<small>Practice Quest · '+esc(labName(q.topic))+'</small>Mixed Practice':mode==='custom'?'<small>My Mix · '+esc(labName(q.topic))+'</small>My Mix':'<small>Practice Quest</small>'+esc(labName(mode)));
+ const acc=LAB_COLORS[mode==='diagnostic'||mode==='mixed'||mode==='custom'?(mode==='custom'?'mixed':mode):q.topic]||LAB_COLORS.mixed;$('practice').style.setProperty('--acc',acc[1]);$('practice').style.setProperty('--accbg',acc[0]);
  $('actions').hidden=watching;$('watchActions').hidden=!watching;
  $('new').innerHTML=BI.next+(watching?'Another example':'New question');
  $('new').hidden=mode==='diagnostic';
@@ -1295,7 +1317,11 @@ function initUI(){
  document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.closest&&e.target.closest('#fields,#bench'))setTimeout(reactToCheck,0);});
  $('viewTabs').onclick=e=>{const b=e.target.closest('[data-view]');if(!b)return;if(b.dataset.view==='learn')startLearn(TRAIL.includes(mode)?mode:TRAIL[0],'watch',true);else startPractice(TRAIL.includes(mode)?mode:'mixed',true);};
  $('trail').onclick=e=>{const b=e.target.closest('[data-level]');if(b)startLearn(b.dataset.level,'watch',true);};
- $('modeGrid').addEventListener('click',e=>{const g=e.target.closest('[data-qgroup]');if(g){qGroup=+g.dataset.qgroup;renderPickers();e.stopPropagation();}},true);
+ $('modeGrid').addEventListener('click',e=>{const g=e.target.closest('[data-qgroup]');if(g){qGroup=+g.dataset.qgroup;renderPickers();e.stopPropagation();return;}
+  if(e.target.closest('[data-pickseveral]')){pickSeveral=!pickSeveral;renderPickers();e.stopPropagation();return;}
+  if(e.target.closest('[data-mixclear]')){myMix=[];saveMix();renderPickers();e.stopPropagation();return;}
+  if(e.target.closest('[data-mixgo]')){pickSeveral=false;mixBag=[];startPractice('custom');e.stopPropagation();return;}
+  const t=e.target.closest('[data-quest]');if(t&&pickSeveral){const id=t.dataset.quest;myMix=myMix.includes(id)?myMix.filter(x=>x!==id):[...myMix,id];saveMix();renderPickers();e.stopPropagation();}},true);
  $('modeGrid').onclick=$('featured').onclick=e=>{const b=e.target.closest('[data-quest]');if(b)startPractice(b.dataset.quest,true);};
  $('jumpPill').onclick=()=>{$('jumpPill').hidden=true;$('practice').scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});};
  addEventListener('scroll',()=>{if(!$('jumpPill').hidden&&$('practice').getBoundingClientRect().top<innerHeight*.6)$('jumpPill').hidden=true;},{passive:true});
@@ -1884,7 +1910,7 @@ function chooseTopic(){if(!mixedTopicBag.length){const weights={titration:5,limi
 function readinessTopics(){const pool=READINESS_PLAN;let topics,tries=0;do{topics=shuffle(pool);tries++;}while(tries<200&&(topics[0]===lastReadinessStart||topics.some((t,i)=>i>0&&t===topics[i-1])));lastReadinessStart=topics[0];return topics;}
 function freshProblem(id){let candidate,key;for(let tries=0;tries<20;tries++){candidate=generators[id]();key=candidate.title+'|'+candidate.story+'|'+(candidate.equation||'');if(key!==lastProblemByTopic[id])break;}lastProblemByTopic[id]=key;return candidate;}
 
-function newQuestion(){watchShown=false;if(mode==='reactions')reactionPracticePosition=reactionPracticePosition%5+1;else reactionPracticePosition=0;if(mode==='diagnostic'&&diag?.done){diag=null}if(mode==='diagnostic'&&!diag)diag={topics:readinessTopics(),results:[],position:0,done:false};const id=mode==='diagnostic'?diag.topics[diag.position]:mode==='mixed'?chooseTopic():mode;q=freshProblem(id);index=0;completed=[];assisted=false;awarded=false;attempted=false;hadError=false;$('feedback').className='feedback';$('hintBox').hidden=true;$('bottomNew').hidden=true;$('report').hidden=true;$('completed').hidden=true;modeButtons();render();stats();focusPracticeArea('title');}
+function newQuestion(){watchShown=false;if(mode==='reactions')reactionPracticePosition=reactionPracticePosition%5+1;else reactionPracticePosition=0;if(mode==='diagnostic'&&diag?.done){diag=null}if(mode==='diagnostic'&&!diag)diag={topics:readinessTopics(),results:[],position:0,done:false};const id=mode==='diagnostic'?diag.topics[diag.position]:mode==='mixed'?chooseTopic():mode==='custom'?chooseCustom():mode;q=freshProblem(id);index=0;completed=[];assisted=false;awarded=false;attempted=false;hadError=false;$('feedback').className='feedback';$('hintBox').hidden=true;$('bottomNew').hidden=true;$('report').hidden=true;$('completed').hidden=true;modeButtons();render();stats();focusPracticeArea('title');}
 
 const LESSONS={balance:['t65x7RaFeFY','How to Balance Chemical Reactions'],predict:['YqZjFTpnHjc','Tips and Tricks for Predicting and Balancing Reactions'],
 solution:['auELinUz1R4','Solution Stoichiometry: Molarity, Volume, and Mass'],titration:['Ca7o0AjwhcY','Acid–Base Titration Stoichiometry'],acidPractice:['tbcxL9K3KBU','Practice Problems for Acid–Base Stoichiometry'],limiting:['7FP2lehyuRU','Introduction to Limiting Reactants'],mass:['x4VcJBZFGAY','Introduction to Stoichiometry: Mole Ratios and Mass'],moles:['wB01PrQBxVw','What Is a Mole? Three Essential Conversions'],concentration:['-G1zjTVpkgU','Solution Concentrations: Percent, Molarity, and Molality'],ions:['dtdiKtrVQ5Y','Electrolytes: Strong, Weak, and Nonelectrolytes'],solubility:['drIkMSVAE0A','Solubility'],netIonic:['RsPUbM1DivA','How to Write Net Ionic Equations'],acidBasics:['_3MEHX5yvzQ','Properties of Acids and Bases'],lewis:['CGmbd2YwflY','How to Draw Lewis Structures'],formal:['-WH0D2cWcJc','Formal Charge and Resonance Structures'],vsepr:['wD3b-7J0Xy0','Introduction to VSEPR Theory'],polarity:['0fzuzHnkPAc','Electronegativity and Polarity: Polar Molecules'],hybrid:['Nb4z-SSwmb4','Hybridization: Basics to Advanced Concepts'],mo:['r3IGajq0hD8','MO Theory Part 2'],redox:['IsypcIC7XqA','Oxidation and Reduction: LEO Goes GER'],gas:['T0fOuTmNY6g','Introduction to the Ideal Gas Law'],heat:['KqKvWr6Y2zs','Energy and the First Law of Thermodynamics'],imf:['RNQKJ1hnHes','Basic Concepts Behind Intermolecular Forces'],colligative:['efD7e2XiNsM','Understanding Colligative Properties'],trends:['T6j9Gw1EyPU','Periodic Table Trends']};
