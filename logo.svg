@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Bridge to 1B logo: a smiling atom with a backpack walking across a bridge, carrying a 1B flag">
+<defs>
+<radialGradient id="abg" cx="50%" cy="30%" r="75%"><stop offset="0" stop-color="#fff6ea"/><stop offset=".6" stop-color="#f3e8ff"/><stop offset="1" stop-color="#dde4ff"/></radialGradient>
+<linearGradient id="aarch" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6cc7a5"/><stop offset=".5" stop-color="#7d88ea"/><stop offset="1" stop-color="#ee8fb3"/></linearGradient>
+<linearGradient id="awater" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9dcef"/><stop offset="1" stop-color="#7cc2de"/></linearGradient>
+<radialGradient id="abody" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#fff4c9"/><stop offset=".7" stop-color="#ffd36b"/><stop offset="1" stop-color="#f6b84a"/></radialGradient>
+<linearGradient id="apack" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9aa3f2"/><stop offset="1" stop-color="#6d78de"/></linearGradient>
+<clipPath id="aclip"><circle cx="60" cy="60" r="58"/></clipPath>
+</defs>
+<circle cx="60" cy="60" r="58" fill="url(#abg)"/>
+<g clip-path="url(#aclip)">
+<path d="M15 26l1.8 4.2 4.2 1.8-4.2 1.8L15 38l-1.8-4.2L9 32l4.2-1.8Z" fill="#b9a6ff"/>
+<path d="M101 22l1.3 3 3 1.3-3 1.3-1.3 3-1.3-3-3-1.3 3-1.3Z" fill="#ffb3c7"/>
+<circle cx="24" cy="50" r="1.8" fill="#8fd6c2"/><circle cx="98" cy="46" r="1.6" fill="#ffcf63"/>
+<rect x="0" y="99" width="120" height="25" fill="url(#awater)"/>
+<path d="M8 108q5-2.5 10 0t10 0M48 112q5-2.5 10 0t10 0M86 108q5-2.5 10 0t10 0" fill="none" stroke="#e6f7fc" stroke-width="2" stroke-linecap="round"/>
+<path d="M-4 99 Q60 52 124 99" fill="none" stroke="url(#aarch)" stroke-width="6" stroke-linecap="round"/>
+<g stroke="#b7bdf0" stroke-width="2"><path d="M14 88v10M26 81v17M38 76v22M82 76v22M94 81v17M106 88v10"/></g>
+<rect x="-4" y="95" width="128" height="7" rx="3.5" fill="#6f79d6"/>
+<rect x="-4" y="95" width="128" height="2.4" rx="1.2" fill="#9aa2ef"/>
+<g transform="translate(16 74)"><rect x="-1" y="0" width="2" height="21" rx="1" fill="#8a7fa6"/><rect x="-10" y="-1" width="20" height="11" rx="3" fill="#e2f5ec" stroke="#5fae8e" stroke-width="1.8"/><text x="0" y="7.8" text-anchor="middle" font-family="ui-rounded,'Segoe UI',Arial,sans-serif" font-weight="800" font-size="8" fill="#2f7f5f">1A</text></g>
+<g transform="translate(58 60)">
+<path d="M-22 6c-4 1-7 9-5 15 2 5 8 6 12 4z" fill="url(#apack)" stroke="#5560c6" stroke-width="1.6"/>
+<path d="M-24 12h6" stroke="#5560c6" stroke-width="1.4" stroke-linecap="round"/>
+<ellipse cx="-7" cy="33" rx="6" ry="3.4" fill="#f0a54a"/><ellipse cx="9" cy="32" rx="6" ry="3.4" fill="#f0a54a"/>
+<path d="M-7 25v6M8 25v5" stroke="#e8a238" stroke-width="4" stroke-linecap="round"/>
+<ellipse rx="34" ry="11" fill="none" stroke="#7b86e6" stroke-width="2.6" transform="rotate(-12)"/>
+<ellipse rx="34" ry="11" fill="none" stroke="#e58fb0" stroke-width="2.6" transform="rotate(62)"/>
+<ellipse rx="34" ry="11" fill="none" stroke="#6cc1a2" stroke-width="2.6" transform="rotate(-62)"/>
+<circle r="22" fill="url(#abody)" stroke="#e39a2a" stroke-width="2"/>
+<path d="M-12-15q6-6 14-4" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".75"/>
+<ellipse cx="-7.5" cy="-1" rx="3.6" ry="4.6" fill="#2b2230"/><ellipse cx="7.5" cy="-1" rx="3.6" ry="4.6" fill="#2b2230"/>
+<circle cx="-6.2" cy="-2.8" r="1.5" fill="#fff"/><circle cx="8.8" cy="-2.8" r="1.5" fill="#fff"/><circle cx="-8.6" cy=".8" r=".7" fill="#fff"/><circle cx="6.4" cy=".8" r=".7" fill="#fff"/>
+<ellipse cx="-14" cy="6" rx="4" ry="2.5" fill="#ff9fb4" opacity=".8"/><ellipse cx="14" cy="6" rx="4" ry="2.5" fill="#ff9fb4" opacity=".8"/>
+<path d="M-5 6q5 6 10 0q-5 2-10 0z" fill="#c4505f" stroke="#7a3540" stroke-width="1.4" stroke-linejoin="round"/>
+<path d="M-22 4q0 4 4 6" stroke="#5560c6" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+<circle cx="33" cy="-7" r="3.6" fill="#7b86e6" stroke="#fff" stroke-width="1.2"/>
+<circle cx="-15" cy="-28" r="3.6" fill="#e58fb0" stroke="#fff" stroke-width="1.2"/>
+<circle cx="-16" cy="29" r="3.6" fill="#6cc1a2" stroke="#fff" stroke-width="1.2"/>
+<path d="M20 8q6 2 9-2" stroke="#e8a238" stroke-width="4" fill="none" stroke-linecap="round"/>
+<rect x="28" y="-34" width="2.4" height="42" rx="1.2" fill="#8a6f8f"/>
+<path d="M30.4-34h20l-5 7 5 7h-20z" fill="#ffd1df" stroke="#d7799a" stroke-width="1.8" stroke-linejoin="round"/>
+<text x="39" y="-23" text-anchor="middle" font-family="ui-rounded,'Segoe UI',Arial,sans-serif" font-weight="900" font-size="9.5" fill="#b04a6f">1B</text>
+<circle cx="29.2" cy="7" r="3.6" fill="#ffd36b" stroke="#e39a2a" stroke-width="1.4"/>
+</g>
+</g>
+<circle cx="60" cy="60" r="57" fill="none" stroke="#7b86e6" stroke-width="2.5" opacity=".35"/>
+</svg>
