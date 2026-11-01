@@ -819,6 +819,16 @@ main.play.card{border-top:6px solid var(--acc,#4b57d1);padding-top:16px;backgrou
 .ready-cta{border:2px solid #f0cf86;background:linear-gradient(135deg,#fffaf0,#fff3d6);color:#6b4d0c;border-radius:16px;padding:10px 16px;min-height:56px;font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:1.02rem;cursor:pointer;box-shadow:0 3px 0 #f0cf86}
 .ready-cta:active{transform:translateY(2px);box-shadow:0 1px 0 #f0cf86}
 @media(max-width:680px){.ready-cta{width:100%}}
+/* v35: Practice Quests grouped into 4 tabs of 3 topics */
+#featured{display:grid;grid-template-columns:1.3fr 1fr;gap:12px}
+.feature-card.mixed{border-color:#d5d9e8;background:linear-gradient(135deg,#f6f7fb,#fff)}.feature-card.mixed:hover,.feature-card.mixed.active{border-color:#7d8aa6;background:linear-gradient(135deg,#eef0f7,#fff)}
+#modeGrid{display:block}
+.qgroups{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.qg{display:inline-flex;align-items:center;gap:7px;border:2px solid #dfe3f1;background:#fff;border-radius:999px;padding:8px 14px;min-height:46px;font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:1rem;color:#34416a;cursor:pointer;box-shadow:0 2px 0 #e6e9f4}
+.qg small{background:#eef0f6;color:#5d6883;border-radius:99px;padding:1px 8px;font-family:Nunito,sans-serif;font-weight:800;font-size:.75rem}
+.qg.on{background:#4b57d1;border-color:#4b57d1;color:#fff;box-shadow:0 3px 0 #3c47b8}.qg.on small{background:#ffffff33;color:#fff}
+.qtiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:18px}
+@media(max-width:680px){#featured{grid-template-columns:1fr;gap:8px}.qgroups{display:grid;grid-template-columns:1fr 1fr;gap:6px}.qg{justify-content:center;padding:7px 8px;font-size:.92rem;min-height:44px}.qtiles{grid-template-columns:1fr;gap:8px}.qtiles .pick.tile{max-width:none}}
 
 .b1-mood [data-m]{display:none}
 .b1-mood[data-mood=idle] [data-m~=idle],.b1-mood[data-mood=happy] [data-m~=happy],.b1-mood[data-mood=star] [data-m~=star],.b1-mood[data-mood=wrong] [data-m~=wrong],.b1-mood[data-mood=curious] [data-m~=curious],.b1-mood[data-mood=excited] [data-m~=excited],.b1-mood[data-mood=peek] [data-m~=peek]{display:inline}
@@ -953,7 +963,7 @@ main.play.card{border-top:6px solid var(--acc,#4b57d1);padding-top:16px;backgrou
   <button type="button" role="tab" data-view="practice"><span class="ms-ico" aria-hidden="true">🎯</span><span><b>Practice Quests</b><small>Solve on your own, earn XP, or take the Readiness Check.</small></span></button>
  </div>
  <section id="learnView" aria-label="Learn Trail stops"><div class="picker" id="trail"></div><p class="swipe-hint">Swipe for more stops →</p></section>
- <section id="practiceView" aria-label="Practice quests" hidden><div class="featured" id="featured"></div><div class="divider"><span>or practice one topic</span></div><nav class="picker" id="modeGrid" aria-label="Choose a practice quest"></nav><p class="swipe-hint">Swipe for more topics →</p></section>
+ <section id="practiceView" aria-label="Practice quests" hidden><div class="featured" id="featured"></div><div class="divider"><span>or pick one topic</span></div><nav class="picker" id="modeGrid" aria-label="Choose a practice quest"></nav></section>
 
  <main class="panel c1b play card" id="practice" tabindex="-1">
   <div class="play-head"><div class="ph-left"><h2 class="play-title" id="playHeadTitle"></h2></div><div class="ph-btns"><button type="button" class="refbtn" id="refBtn">Reference</button><button type="button" id="new" class="newbtn">New question</button></div></div>
@@ -1188,6 +1198,8 @@ const LAB_INFO={
  mo:['🎚️','MO filling, bond order, magnetism'],
  physical:['🔥','Gases, heat, forces, solutions'],
  kineq:['🚀','Rates, K-ready concentrations, heat & algebra']};
+const QUEST_GROUPS=[['🚀','1B Launch',['kineq','physical','foundations']],['🧪','Moles & Solutions',['limiting','titration','ions']],['🔁','Reactions',['reactions','aqueous','redox']],['⚛️','Structure & Bonding',['lewis','geometry','mo']]];
+let qGroup=0;
 const TRAIL=['foundations','limiting','titration','ions','reactions','aqueous','redox','lewis','geometry','mo','physical','kineq'];
 /* 12 readiness questions, weighted toward what CHEM 1B builds on (acid–base and solution stoichiometry, ions, REDOX, energy) */
 /* aligned with the CHEM 1B outline: kinetics and equilibrium come first, then acid–base and solubility equilibria, thermodynamics and electrochemistry */
@@ -1202,9 +1214,10 @@ function renderPickers(){
   +'<span class="mode-icon">'+tileArt(id)+'</span><span class="tile-txt"><span class="num">'+(wins>=5?'✓ ':'')+label+'</span><b class="mode-name">'+esc(id==='mixed'?'Mixed Practice':labName(id))+'</b><small>'+esc(id==='mixed'?'A bit of everything':LAB_INFO[id][1])+'</small></span>'
   +(id==='mixed'?'':'<span class="foot"><span class="meter"><span style="width:'+(wins/5*100)+'%"></span></span><small>'+wins+'/5</small></span>')+'</button>';};
  $('trail').innerHTML=TRAIL.map((id,i)=>tile(id,i,'level','Stop '+(i+1))).join('');
- $('modeGrid').innerHTML=tile('mixed',0,'quest','Quest')+TRAIL.map((id,i)=>tile(id,i,'quest','Quest')).join('');
+ $('modeGrid').innerHTML='<div class="qgroups" role="tablist" aria-label="Topic groups">'+QUEST_GROUPS.map(([ico,name,ids],gi)=>'<button type="button" role="tab" class="qg'+(gi===qGroup?' on':'')+'" data-qgroup="'+gi+'" aria-selected="'+(gi===qGroup)+'"><span aria-hidden="true">'+ico+'</span>'+esc(name)+'<small>'+ids.length+'</small></button>').join('')+'</div><div class="qtiles">'+QUEST_GROUPS[qGroup][2].map(id=>tile(id,0,'quest','Quest')).join('')+'</div>';
  const dActive=uiView==='practice'&&mode==='diagnostic';
- $('featured').innerHTML='<button type="button" class="feature-card'+(dActive?' active':'')+'" data-quest="diagnostic"><span class="fc-ico" aria-hidden="true">'+tileArt('diagnostic')+'</span><span><b>Readiness Check</b><small>12 questions on what CHEM 1B uses most, then your personal review plan.'+(quest.checks?' Completed '+quest.checks+'×.':'')+'</small></span><span class="fc-go">Start →</span></button>';
+ const mActive=uiView==='practice'&&mode==='mixed';
+ $('featured').innerHTML='<button type="button" class="feature-card'+(dActive?' active':'')+'" data-quest="diagnostic"><span class="fc-ico" aria-hidden="true">'+tileArt('diagnostic')+'</span><span><b>Readiness Check</b><small>12 questions on what CHEM 1B uses first, then your review plan.'+(quest.checks?' Done '+quest.checks+'×.':'')+'</small></span></button><button type="button" class="feature-card mixed'+(mActive?' active':'')+'" data-quest="mixed"><span class="fc-ico" aria-hidden="true">'+tileArt('mixed')+'</span><span><b>Mixed Practice</b><small>A bit of everything, more of what you need.</small></span></button>';
  for(const id of ['trail','modeGrid']){const box=$(id),a=box.querySelector('.active');if(a&&box.scrollWidth>box.clientWidth+4)box.scrollTo({left:Math.max(0,a.offsetLeft-box.offsetLeft-12),behavior:'auto'});}
 }
 function setView(v){uiView=v;$('viewTabs').querySelectorAll('button').forEach(b=>{const on=b.dataset.view===v;b.classList.toggle('active',on);b.setAttribute('aria-selected',String(on));});
@@ -1214,7 +1227,7 @@ function ensurePlayVisible(){if(quietScroll)return;const t=$('practice').getBoun
 function pickQuietly(fn){const was=quietScroll;quietScroll=true;try{fn();}finally{quietScroll=was;}showJumpPill();}
 function showJumpPill(){const pill=$('jumpPill');if(!pill)return;const r=$('practice').getBoundingClientRect();pill.hidden=!(r.top>innerHeight*.6);}
 function startLearn(id,phase='watch',fromPicker=false){const go=()=>{setView('learn');mode=id;learnPhase=phase;watching=phase==='watch';diag=null;newQuestion();};if(fromPicker)pickQuietly(go);else{go();ensurePlayVisible();}}
-function startPractice(id,fromPicker=false){const go=()=>{setView('practice');mode=id;learnPhase='';watching=false;diag=null;newQuestion();};if(fromPicker)pickQuietly(go);else{go();ensurePlayVisible();}}
+function startPractice(id,fromPicker=false){if(TRAIL.includes(id))qGroup=QUEST_GROUPS.findIndex(g=>g[2].includes(id));const go=()=>{setView('practice');mode=id;learnPhase='';watching=false;diag=null;newQuestion();};if(fromPicker)pickQuietly(go);else{go();ensurePlayVisible();}}
 
 /* ----- worked example: reveal one step at a time ----- */
 function fillValues(){const s=q.steps[index];s.fields.forEach(f=>{const el=$('input-'+f.id);if(!el)return;el.value=f.options||f.formula?f.answer:fmt(f.answer,f.exact?Math.max(1,String(f.answer).replace('.','').replace('-','').length):3);const box=$('field-'+f.id);if(box)box.classList.add('good');});}
@@ -1282,6 +1295,7 @@ function initUI(){
  document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.closest&&e.target.closest('#fields,#bench'))setTimeout(reactToCheck,0);});
  $('viewTabs').onclick=e=>{const b=e.target.closest('[data-view]');if(!b)return;if(b.dataset.view==='learn')startLearn(TRAIL.includes(mode)?mode:TRAIL[0],'watch',true);else startPractice(TRAIL.includes(mode)?mode:'mixed',true);};
  $('trail').onclick=e=>{const b=e.target.closest('[data-level]');if(b)startLearn(b.dataset.level,'watch',true);};
+ $('modeGrid').addEventListener('click',e=>{const g=e.target.closest('[data-qgroup]');if(g){qGroup=+g.dataset.qgroup;renderPickers();e.stopPropagation();}},true);
  $('modeGrid').onclick=$('featured').onclick=e=>{const b=e.target.closest('[data-quest]');if(b)startPractice(b.dataset.quest,true);};
  $('jumpPill').onclick=()=>{$('jumpPill').hidden=true;$('practice').scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});};
  addEventListener('scroll',()=>{if(!$('jumpPill').hidden&&$('practice').getBoundingClientRect().top<innerHeight*.6)$('jumpPill').hidden=true;},{passive:true});
