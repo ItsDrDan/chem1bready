@@ -994,6 +994,12 @@ main.play.card{border-top:6px solid var(--acc,#4b57d1);padding-top:16px;backgrou
 .foot-credits p{margin:8px 0 0;text-align:left;color:var(--muted);line-height:1.5}
 /* reference dialog */
 dialog{border-radius:22px;background:#fffdf9;border:1px solid #ece4d4}
+
+/* v47: illustrated icons */
+.mode-icon img.tile-img{width:44px;height:44px;object-fit:contain}.mode-icon{background:#fff}
+.fc-ico img.tile-img{width:44px;height:44px;object-fit:contain}
+.rank-img{width:30px;height:30px;object-fit:contain;display:block}
+@media(max-width:680px){.mode-icon img.tile-img{width:36px;height:36px}}
 </style><script src="https://itsdrdan.github.io/games/track.js" defer></script><script src="https://itsdrdan.github.io/questionbank/qb.js"></script>
 
 <link rel="stylesheet" href="https://itsdrdan.github.io/games/brand/itsdrdan.css">
@@ -1346,7 +1352,9 @@ const MART={
  diagnostic:`<rect x="10" y="8" width="28" height="34" rx="4" fill="#fff6dc" stroke="${INK}" stroke-width="2.6"/><rect x="18" y="5" width="12" height="7" rx="2.5" fill="#ffd36b" stroke="${INK}" stroke-width="2.2"/><path d="M15 20l2.5 2.5L22 18M15 29l2.5 2.5L22 27" fill="none" stroke="#4fa36a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M25 21h8M25 30h8" stroke="${INK}" stroke-width="2.4" stroke-linecap="round"/><path d="M15 37h4" stroke="#e2b33b" stroke-width="2.6" stroke-linecap="round"/>`
 };
 const LAB_COLORS={foundations:['#fff1e4','#e39a54'],limiting:['#eaf6f0','#4fa36a'],titration:['#e8f2fb','#4b8fd0'],ions:['#e6f6fb','#3fa6c7'],reactions:['#fdedf2','#d9668e'],aqueous:['#e6f6f4','#3aa59a'],redox:['#fff7dc','#e2b33b'],lewis:['#f6eefb','#a07cd0'],geometry:['#eef0fe','#6b77e6'],mo:['#f1edfd','#8a6fd6'],physical:['#fdeee8','#e0785a'],kineq:['#eaf0ff','#5b6fe0'],mathgym:['#e9f7f1','#3f9a7a'],daily:['#fdeef3','#d9668e'],mixed:['#f2f3f8','#7d8aa6'],diagnostic:['#fff6dc','#e2b33b']};
-const tileArt=id=>`<svg viewBox="0 0 48 48" aria-hidden="true">${MART[id]||''}</svg>`;
+/* v47: illustrated icons (Dr. Dan's badge set, assets/icons/*.webp); the drawn SVG in MART stays as the fallback */
+const ICON_IMG={foundations:'density',limiting:'balance',titration:'burette',ions:'dissolve',reactions:'collide',aqueous:'acidbase',redox:'redox',lewis:'water',geometry:'geometry',mo:'lattice',physical:'gaslaw',kineq:'equilibrium',mathgym:'ice',diagnostic:'checklist',daily:'target',mixed:'react'};
+const tileArt=id=>ICON_IMG[id]?`<img class="tile-img" src="assets/icons/${ICON_IMG[id]}.webp" alt="" loading="lazy" decoding="async" onerror="this.replaceWith(Object.assign(document.createElement('span'),{innerHTML:'<svg viewBox=&quot;0 0 48 48&quot; aria-hidden=&quot;true&quot;>'+(MART['${id}']||'')+'</svg>'}).firstChild)">`:`<svg viewBox="0 0 48 48" aria-hidden="true">${MART[id]||''}</svg>`;
 
 /* medals: white glyphs on a coloured hexagon (24×24 glyph space) */
 const BART={
@@ -1406,7 +1414,7 @@ const TRAIL=['foundations','limiting','titration','ions','reactions','aqueous','
 /* 12 readiness questions, weighted toward what CHEM 1B builds on (acid–base and solution stoichiometry, ions, REDOX, energy) */
 /* aligned with the CHEM 1B outline: kinetics and equilibrium come first, then acid–base and solubility equilibria, thermodynamics and electrochemistry */
 const READINESS_PLAN=['kineq','kineq','mathgym','mathgym','ions','ions','limiting','titration','aqueous','physical','reactions','redox'];
-const RANK_ICONS=[ui('bridge'),ui('compass'),ui('flask'),ui('atom'),ui('rocket')];
+const RANK_ICONS=['<img class="rank-img" src="assets/icons/bridge.webp" alt="">','<img class="rank-img" src="assets/icons/medal.webp" alt="">','<img class="rank-img" src="assets/icons/finish.webp" alt="">','<img class="rank-img" src="assets/icons/trophy.webp" alt="">','<img class="rank-img" src="assets/icons/stars.webp" alt="">'];
 let watching=false,watchShown=false,quietScroll=true,uiView='learn',learnPhase='watch';
 const labName=id=>MODES.find(m=>m[0]===id)[1];
 
